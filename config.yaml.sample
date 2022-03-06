@@ -1,0 +1,15 @@
+profile: default
+
+default:
+  api_id: "12345678"
+  api_hash: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  session: "self"
+
+tmeic:
+  api_id: "12345678"
+  api_hash: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  session: "tmeic"
+
+ids:
+  - 5080772818
+  - 5198939513

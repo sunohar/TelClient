@@ -1,0 +1,8 @@
+App Configuration/App Configuration 1.png
+App Configuration/App Configuration 2.png
+App Configuration/App Configuration.txt
+config.json
+config.yaml
+*.session
+__pycache__/
+*.log
