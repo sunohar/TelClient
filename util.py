@@ -208,7 +208,7 @@ def read_config(filename):
 # DBMAP = read_config("./config/db_map.yaml")
 
 # Create logger and set log levels
-file_log_level = "debug"
+file_log_level = "info"
 console_log_level = "debug"
 rich_console = False
 
