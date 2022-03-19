@@ -6,4 +6,4 @@ config.yaml
 *.session
 __pycache__/
 *.log
-media/17185.png
+media/

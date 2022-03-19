@@ -19,13 +19,35 @@ Log.debug(f"{ids = }, {type(ids)}")
 async def save_message(event, msgtype):
     peer_id = getattr(event.message.peer_id, "user_id", 0)
     from_id = getattr(event.message.from_id, "user_id", 0)
+    alt_emoji = ""
     if from_id:
         sender = from_id
     else:
         sender = peer_id
     if peer_id in ids.keys():
-        Log.info(f"{ids[sender]}: {event.message.message} (id:{event.message.id} {msgtype})")
-        filename = f"./media/{event.message.id}.png"
+        is_photo = getattr(event.message.media, "photo", 0)
+        is_document = getattr(event.message.media, "document", 0)
+        # if is_photo:
+        #     ext = "png"
+        # else:
+        #     ext = "mp4"
+        ext = "png"
+        if is_document:
+            mime_type = getattr(event.message.media.document, "mime_type", 0)
+            if mime_type == "video/mp4":
+                ext = "mp4"
+            elif mime_type == "image/webp":
+                ext = "webp"
+            elif mime_type == "video/webm":
+                ext = "webm"
+            elif mime_type == "application/x-tgsticker":
+                ext = "tgs"
+                alt_emoji = event.message.media.document.attributes[1].alt
+            else:
+                ext = "gif"
+        filename = f"./media/{event.message.id}.{ext}"
+
+        Log.info(f"{ids[sender]}: {event.message.message + alt_emoji} (id:{event.message.id} {msgtype})")
         await client.download_media(event.message, filename)
 
 

@@ -210,7 +210,7 @@ def read_config(filename):
 # Create logger and set log levels
 file_log_level = "info"
 console_log_level = "debug"
-rich_console = False
+rich_console = True
 
 Logger = TICSLogger(dir="./logs", rich_console=rich_console)
 Log = Logger.get_log
