@@ -15,7 +15,7 @@ ids = config["ids"]
 client = TelegramClient(session, api_id, api_hash)
 Log.debug(f"{ids = }, {type(ids)}")
 
-
+@Log.catch()
 async def save_message(event, msgtype):
     peer_id = getattr(event.message.peer_id, "user_id", 0)
     from_id = getattr(event.message.from_id, "user_id", 0)
@@ -50,7 +50,7 @@ async def save_message(event, msgtype):
         Log.info(f"{ids[sender]}: {event.message.message + alt_emoji} (id:{event.message.id} {msgtype})")
         await client.download_media(event.message, filename)
 
-
+@Log.catch()
 @client.on(events.NewMessage)
 async def new_message(event):
     try:
@@ -60,7 +60,7 @@ async def new_message(event):
     except Exception as e:
         Log.error(e)
 
-
+@Log.catch()
 @client.on(events.MessageDeleted)
 async def delete_message(event):
     try:
@@ -71,7 +71,7 @@ async def delete_message(event):
     except Exception as e:
         Log.error(e)
 
-
+@Log.catch()
 @client.on(events.MessageEdited)
 async def edit_message(event):
     try:

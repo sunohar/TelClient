@@ -10,7 +10,7 @@ logger.remove()
 Log = logger
 
 # Configure console logger
-fmt = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <level>{message: <50}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan>"
+fmt = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <cyan>{function: <15}</cyan> | <level>{message: <50}</level>"
 Log.add(sys.stdout, level=console_log_level, format=fmt, enqueue=True, backtrace=True, diagnose=True)
 
 # Configure file logger
