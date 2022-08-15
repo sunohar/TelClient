@@ -1,5 +1,5 @@
 from telethon import TelegramClient, events
-from util import Log
+from util import Log, Log2
 import yaml
 
 # Read config
@@ -15,6 +15,7 @@ ids = config["ids"]
 client = TelegramClient(session, api_id, api_hash)
 Log.debug(f"{ids = }, {type(ids)}")
 
+
 @Log.catch()
 async def save_message(event, msgtype):
     peer_id = getattr(event.message.peer_id, "user_id", 0)
@@ -24,6 +25,7 @@ async def save_message(event, msgtype):
         sender = from_id
     else:
         sender = peer_id
+    Log2.info(f"{ids.get(sender,sender)}: {event.message.message} (id:{event.message.id} {msgtype})")
     if peer_id in ids.keys():
         is_photo = getattr(event.message.media, "photo", 0)
         is_document = getattr(event.message.media, "document", 0)
@@ -50,6 +52,7 @@ async def save_message(event, msgtype):
         Log.info(f"{ids[sender]}: {event.message.message + alt_emoji} (id:{event.message.id} {msgtype})")
         await client.download_media(event.message, filename)
 
+
 @Log.catch()
 @client.on(events.NewMessage)
 async def new_message(event):
@@ -59,6 +62,7 @@ async def new_message(event):
 
     except Exception as e:
         Log.error(e)
+
 
 @Log.catch()
 @client.on(events.MessageDeleted)
@@ -71,6 +75,7 @@ async def delete_message(event):
     except Exception as e:
         Log.error(e)
 
+
 @Log.catch()
 @client.on(events.MessageEdited)
 async def edit_message(event):
@@ -82,5 +87,6 @@ async def edit_message(event):
 
 
 Log.info("Starting Telegram Client....")
+Log.debug("If phone or bot token is asked then enter phone number including country code...")
 client.start()
 client.run_until_disconnected()
