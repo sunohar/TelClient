@@ -1,3 +1,5 @@
+# Telegram client library https://github.com/LonamiWebs/Telethon
+
 from telethon import TelegramClient, events
 from util import Log, Log2
 import yaml

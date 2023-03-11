@@ -6,5 +6,8 @@ config.yaml
 *.session
 __pycache__/
 *.log
-media/
+media/*
+!media/.dummy
 .vscode/settings.json
+media_checked/
+logs_checked/
