@@ -2,7 +2,7 @@
 # launcher.sh
 # Navigate to TelClient folder and execute script
 
-# Normal python
+# venv python
 # cd /home/pi/Projects/TelClient
 # . /home/pi/Projects/venv/383venv/bin/activate
 # python -V
@@ -10,6 +10,6 @@
 
 # Pyenv python
 cd /mnt/dietpi_userdata/Projects/TelClient
-python -V
-pyenv which python
-python ./PyTelegram.py
+date
+pwd
+/home/dietpi/.pyenv/versions/ticsvenv/bin/python ./PyTelegram.py
