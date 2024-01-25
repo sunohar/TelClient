@@ -12,7 +12,7 @@ def make_filter(name):
 
 # Create logger and set log levels
 file_log_level = "INFO"
-console_log_level = "DEBUG"
+console_log_level = "INFO"
 
 logger.remove()
 # Log = logger.bind(name="default")
