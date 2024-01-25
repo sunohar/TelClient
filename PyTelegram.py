@@ -2,7 +2,7 @@
 
 from telethon import TelegramClient, events
 from util import Log, Log2
-import yaml
+import yaml, time, sys
 
 # Read config
 with open("config.yaml") as cfg:
@@ -90,5 +90,17 @@ async def edit_message(event):
 
 Log.info("Starting Telegram Client....")
 Log.debug("If phone or bot token is asked then enter phone number including country code...")
-client.start()
-client.run_until_disconnected()
+while True:
+    try:
+        Log.info("Connecting to Telegram...")
+        client.start()
+        if client.is_connected():
+            Log.info("Client Successfully Connected")
+            client.run_until_disconnected()
+    except KeyboardInterrupt as ki:
+        Log.warning("User Exit Command. Exiting.")
+        sys.exit(0)
+    except Exception as e:
+        Log.error(e)
+        Log.info("Attempt Re-Connection after 10 seconds...")
+        time.sleep(10)
