@@ -26,12 +26,23 @@ logger.add(sys.stdout, level=console_log_level, format=fmt, enqueue=True, backtr
 full_path = __main__.__file__
 script_name = os.path.basename(os.path.realpath(full_path))
 log_file_name = "./logs/" + script_name[:-3]
+# logger.add(
+#     log_file_name + "_{time:YYYYMMDD}.log",
+#     level=file_log_level,
+#     filter=make_filter("default"),
+#     format=fmt,
+#     rotation="00:00",
+#     enqueue=True,
+#     backtrace=True,
+#     diagnose=True,
+# )
+
 logger.add(
-    log_file_name + "_{time:YYYYMMDD}.log",
+    log_file_name + "_{time:YYYYMM}.log",
     level=file_log_level,
     filter=make_filter("default"),
     format=fmt,
-    rotation="00:00",
+    rotation="monthly",  # Monthly rotation
     enqueue=True,
     backtrace=True,
     diagnose=True,

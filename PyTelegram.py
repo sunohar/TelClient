@@ -2,7 +2,7 @@
 
 from telethon import TelegramClient, events
 from util import Log, Log2
-import yaml, time, sys
+import yaml, time, sys, signal
 
 # Read config
 with open("config.yaml") as cfg:
@@ -16,7 +16,6 @@ session = config[profile]["session"]
 ids = config["ids"]
 client = TelegramClient(session, api_id, api_hash)
 Log.debug(f"{ids = }, {type(ids)}")
-
 
 @Log.catch()
 async def save_message(event, msgtype):
@@ -88,6 +87,17 @@ async def edit_message(event):
         Log.error(e)
 
 
+
+# Define a function to handle the Ctrl+C signal
+def handle_interrupt(signal, frame):
+    Log.warning("Program interrupted by user (Ctrl+C). Exiting.")
+    if client.is_connected():
+        client.disconnect()
+    sys.exit(0)
+
+# Set up the signal handler
+signal.signal(signal.SIGINT, handle_interrupt)
+
 Log.info("Starting Telegram Client....")
 Log.debug("If phone or bot token is asked then enter phone number including country code...")
 while True:
@@ -98,9 +108,15 @@ while True:
             Log.info("Client Successfully Connected")
             client.run_until_disconnected()
     except KeyboardInterrupt as ki:
-        Log.warning("User Exit Command. Exiting.")
-        sys.exit(0)
+        Log.warning("Keyboard Interrupt caught.")
     except Exception as e:
         Log.error(e)
         Log.info("Attempt Re-Connection after 10 seconds...")
+        if client.is_connected():
+            client.disconnect()
         time.sleep(10)
+
+    Log.warning("Unexpected Exit of Loop. Reconnection in 3s. Hit Ctrl+C to exit!")
+    if client.is_connected():
+            client.disconnect()
+    time.sleep(3)
